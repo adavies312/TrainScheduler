@@ -1,0 +1,5 @@
+.jumbotron {
+    text-align:center;
+    background-image: url("../images/header-train.jpg");
+text-shadow: 2px 2px lightblue;
+}
