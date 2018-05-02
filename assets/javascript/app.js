@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyB4vE00hJKCGeaBASgSUDRvqUPY-VXv5XA",
@@ -15,7 +14,7 @@ $(document).ready(function () {
 
     var database = firebase.database();
 
-   database.ref().on("value", function (snapshot) {
+    database.ref().on("value", function (snapshot) {
         var data = snapshot.val();
 
         $("#submit").on("click", function () {
@@ -28,6 +27,7 @@ $(document).ready(function () {
             console.log(firstTrainTime);
             console.log(frequency);
 
+            //Push values to Firebase 
             database.ref().push({
                 trainName: trainName,
                 destination: destination,
@@ -42,7 +42,10 @@ $(document).ready(function () {
             $("#frequency").val("");
 
         })
+
         database.ref().off();
+
+        //Firebase Listener 
         database.ref().on("child_added", function (childSnapshot) {
             var userTrain = childSnapshot.val().trainName;
             var userDestination = childSnapshot.val().destination;
