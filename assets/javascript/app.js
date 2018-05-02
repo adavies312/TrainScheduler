@@ -49,13 +49,31 @@ $(document).ready(function () {
             var userFirstTrain = childSnapshot.val().firstTrainTime;
             var userFrequency = childSnapshot.val().frequency;
 
-            var nextArrival = userFirstTrain
+            //First Train Time - push back one year
+            var arrivalTime = moment(userFirstTrain, 'HH:mm').subtract(1, "years");
+            console.log(moment(arrivalTime).format("hh:mm"));
 
-            var arrivalTime = moment(nextArrival, 'HH:mm').format('hh:mm a');
+            //Difference between the times
+            var diffTime = moment().diff(moment(arrivalTime), "minutes");
+            console.log(diffTime);
+
+            //Time Apart (remainder)
+            var tRemainder = diffTime % userFrequency;
+            console.log(tRemainder);
+
+            //Minutes until train
+            var tMinutesTilTrain = userFrequency - tRemainder;
+            console.log(tMinutesTilTrain);
+
+            //Next Train
+            var nextTrain = moment().add(tMinutesTilTrain, "minutes");
+            console.log(moment(nextTrain).format("hh:mm"));
+
+            //Format Time to AM PM
+            var userFirstTrain = moment(nextTrain).format("hh:mm a");
 
             //display on page
-
-            $("#trains").append("<tr><td>" + userTrain + "</td><td>" + userDestination + "</td><td>" + userFrequency + "</td><td>" + arrivalTime + "</td></tr>");
+            $("#trains").append("<tr><td>" + userTrain + "</td><td>" + userDestination + "</td><td>" + userFrequency + "</td><td>" + userFirstTrain + "</td><td>" + tMinutesTilTrain + "</td></tr>");
 
 
         });
